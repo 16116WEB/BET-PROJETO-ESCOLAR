@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Simulador de Dados</title>
+
+<style>
+body {
+  background: #0a0a0f;
+  color: white;
+  font-family: Arial;
+  text-align: center;
+}
+
+.btn-play {
+  padding: 12px 25px;
+  margin: 10px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+#fakeScreen {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: black;
+  color: #0f0;
+  font-size: 22px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🎲 Simulador</h1>
+
+<p>Saldo: <span id="saldo">100</span></p>
+
+<button class="btn-play" onclick="proximaRodada()">▶ Jogar</button>
+<button class="btn-play" onclick="adicionarMoedas()">💰 Add moedas</button>
+
+<div id="final"></div>
+
+<div id="fakeScreen">
+  <p id="fakeText">Processando saque...</p>
+</div>
+
+<script>
+
+var jogador = { saldo: 100 };
+var rodada = 0;
+var maxRodadas = 10;
+
+function atualizar() {
+  document.getElementById("saldo").textContent = jogador.saldo;
+}
+
+function proximaRodada() {
+  if (rodada >= maxRodadas) {
+    mostrarFinal();
+    return;
+  }
+
+  rodada++;
+
+  var ganho = Math.random() > 0.5 ? 10 : -10;
+  jogador.saldo += ganho;
+
+  atualizar();
+}
+
+function adicionarMoedas() {
+  var v = parseInt(prompt("Quanto adicionar?"));
+  if (v > 0) {
+    jogador.saldo += v;
+    atualizar();
+  }
+}
+
+function mostrarFinal() {
+  document.getElementById("final").innerHTML =
+    `<button class="btn-play" onclick="sacar()">💸 SACAR</button>`;
+}
+
+function sacar() {
+  document.getElementById("final").innerHTML =
+    `<button class="btn-play" onclick="resgatar()">🎁 RESGATAR SEU PRÊMIO</button>`;
+}
+
+function resgatar() {
+  var tela = document.getElementById("fakeScreen");
+  var texto = document.getElementById("fakeText");
+
+  tela.style.display = "flex";
+
+  setTimeout(() => {
+    texto.textContent = "Conectando com o banco...";
+  }, 1000);
+
+  setTimeout(() => {
+    texto.textContent = "Transferindo dinheiro...";
+  }, 2000);
+
+  setTimeout(() => {
+    texto.textContent = "Quase lá...";
+  }, 3000);
+
+  setTimeout(() => {
+    texto.textContent = "😂 Era só uma brincadeira!";
+  }, 4000);
+}
+
+</script>
+
+</body>
+</html>
