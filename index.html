@@ -1,5 +1,4 @@
-CODIGO ORIGINAL
-
+cat > /mnt/user-data/outputs/simulador_dados.html << 'ENDOFFILE'
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -31,7 +30,6 @@ CODIGO ORIGINAL
     overflow-x: hidden;
   }
 
-  /* Background grid */
   body::before {
     content: '';
     position: fixed;
@@ -52,11 +50,7 @@ CODIGO ORIGINAL
     padding: 32px 16px 60px;
   }
 
-  /* HEADER */
-  header {
-    text-align: center;
-    margin-bottom: 36px;
-  }
+  header { text-align: center; margin-bottom: 36px; }
 
   header h1 {
     font-family: 'Bebas Neue', sans-serif;
@@ -76,7 +70,6 @@ CODIGO ORIGINAL
     margin-top: 6px;
   }
 
-  /* PAINEL SUPERIOR */
   .top-panel {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -122,16 +115,8 @@ CODIGO ORIGINAL
   .stat-card .value.red { color: var(--lose); }
   .stat-card .value.green { color: var(--win); }
 
-  /* DADO ANIMADO */
-  .dice-section {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 28px;
-  }
-
-  .dice-wrap {
-    perspective: 600px;
-  }
+  .dice-section { display: flex; justify-content: center; margin-bottom: 28px; }
+  .dice-wrap { perspective: 600px; }
 
   .dice {
     width: 80px;
@@ -149,21 +134,9 @@ CODIGO ORIGINAL
     transition: transform .1s, box-shadow .3s;
   }
 
-  .dice.rolling {
-    animation: diceRoll .5s ease-out;
-  }
-
-  .dice.win {
-    border-color: var(--win);
-    color: var(--win);
-    box-shadow: 0 0 30px rgba(64,208,128,.4);
-  }
-
-  .dice.lose {
-    border-color: var(--lose);
-    color: var(--lose);
-    box-shadow: 0 0 30px rgba(224,64,64,.4);
-  }
+  .dice.rolling { animation: diceRoll .5s ease-out; }
+  .dice.win { border-color: var(--win); color: var(--win); box-shadow: 0 0 30px rgba(64,208,128,.4); }
+  .dice.lose { border-color: var(--lose); color: var(--lose); box-shadow: 0 0 30px rgba(224,64,64,.4); }
 
   @keyframes diceRoll {
     0%   { transform: rotateX(0) rotateY(0); }
@@ -173,10 +146,15 @@ CODIGO ORIGINAL
     100% { transform: rotateX(360deg) rotateY(360deg) scale(1); }
   }
 
-  /* BOTÃO */
+  .btn-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+
   .btn-play {
-    display: block;
-    margin: 0 auto 32px;
     padding: 14px 48px;
     font-family: 'Bebas Neue', sans-serif;
     font-size: 1.5rem;
@@ -190,15 +168,28 @@ CODIGO ORIGINAL
     box-shadow: 0 4px 24px rgba(240,192,64,.3);
   }
 
-  .btn-play:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(240,192,64,.5);
-  }
-
+  .btn-play:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(240,192,64,.5); }
   .btn-play:active:not(:disabled) { transform: scale(.97); }
   .btn-play:disabled { opacity: .4; cursor: not-allowed; }
 
-  /* RODADA ATUAL */
+  .btn-saque {
+    padding: 14px 32px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 4px;
+    color: var(--win);
+    background: transparent;
+    border: 2px solid var(--win);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform .15s, box-shadow .3s, opacity .3s, background .3s;
+    box-shadow: 0 4px 24px rgba(64,208,128,.15);
+  }
+
+  .btn-saque:hover:not(:disabled) { background: rgba(64,208,128,.1); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(64,208,128,.3); }
+  .btn-saque:active:not(:disabled) { transform: scale(.97); }
+  .btn-saque:disabled { opacity: .4; cursor: not-allowed; }
+
   .current-round {
     background: var(--card);
     border: 1px solid var(--border);
@@ -215,48 +206,15 @@ CODIGO ORIGINAL
   .current-round.win  { border-color: var(--win); }
   .current-round.lose { border-color: var(--lose); }
 
-  .round-badge {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2rem;
-    color: var(--muted);
-    white-space: nowrap;
-    min-width: 60px;
-  }
-
-  .round-info {
-    flex: 1;
-    font-size: 1.05rem;
-    line-height: 1.7;
-    color: var(--text);
-  }
-
+  .round-badge { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--muted); white-space: nowrap; min-width: 60px; }
+  .round-info { flex: 1; font-size: 1.05rem; line-height: 1.7; color: var(--text); }
   .round-info strong { color: var(--accent); }
-
-  .round-result {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.6rem;
-    letter-spacing: 2px;
-    white-space: nowrap;
-  }
-
+  .round-result { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 2px; white-space: nowrap; }
   .round-result.win  { color: var(--win); }
   .round-result.lose { color: var(--lose); }
 
-  /* HISTÓRICO */
-  .history-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.4rem;
-    letter-spacing: 3px;
-    color: var(--muted);
-    margin-bottom: 12px;
-    text-transform: uppercase;
-  }
-
-  .history-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
+  .history-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 3px; color: var(--muted); margin-bottom: 12px; text-transform: uppercase; }
+  .history-list { display: flex; flex-direction: column; gap: 8px; }
 
   .history-item {
     background: var(--surface);
@@ -273,53 +231,28 @@ CODIGO ORIGINAL
     transition: opacity .3s, transform .3s, border-left-color .3s;
   }
 
-  .history-item.show {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
+  .history-item.show { opacity: 1; transform: translateX(0); }
   .history-item.win  { border-left-color: var(--win); }
   .history-item.lose { border-left-color: var(--lose); }
 
-  .hi-round {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.3rem;
-    color: var(--muted);
-  }
-
-  .hi-desc {
-    font-size: .9rem;
-    color: var(--text);
-    line-height: 1.4;
-  }
-
+  .hi-round { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; color: var(--muted); }
+  .hi-desc { font-size: .9rem; color: var(--text); line-height: 1.4; }
   .hi-desc span { color: var(--muted); font-size: .8rem; }
 
   .hi-dado {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 1.6rem;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
     border-radius: 8px;
     background: var(--card);
     border: 1px solid var(--border);
   }
 
-  .hi-lucro {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.2rem;
-    letter-spacing: 1px;
-    min-width: 70px;
-    text-align: right;
-  }
-
+  .hi-lucro { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 1px; min-width: 70px; text-align: right; }
   .hi-lucro.win  { color: var(--win); }
   .hi-lucro.lose { color: var(--lose); }
 
-  /* RELATÓRIO FINAL */
   .final-report {
     display: none;
     margin-top: 32px;
@@ -348,42 +281,12 @@ CODIGO ORIGINAL
     margin-bottom: 20px;
   }
 
-  .final-stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-    gap: 12px;
-    margin-bottom: 20px;
-  }
+  .final-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-bottom: 20px; }
+  .fs-item { background: var(--surface); border-radius: 10px; padding: 14px; }
+  .fs-item .lbl { font-size: .7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .fs-item .val { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--accent); }
 
-  .fs-item {
-    background: var(--surface);
-    border-radius: 10px;
-    padding: 14px;
-  }
-
-  .fs-item .lbl {
-    font-size: .7rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 4px;
-  }
-
-  .fs-item .val {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.8rem;
-    color: var(--accent);
-  }
-
-  .final-verdict {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.8rem;
-    letter-spacing: 3px;
-    padding: 14px 24px;
-    border-radius: 10px;
-    margin-bottom: 16px;
-  }
-
+  .final-verdict { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 3px; padding: 14px 24px; border-radius: 10px; margin-bottom: 16px; }
   .final-verdict.profit  { background: rgba(64,208,128,.1); color: var(--win); }
   .final-verdict.loss    { background: rgba(224,64,64,.1);  color: var(--lose); }
   .final-verdict.neutral { background: rgba(240,192,64,.1); color: var(--accent); }
@@ -400,17 +303,109 @@ CODIGO ORIGINAL
     cursor: pointer;
     transition: border-color .3s, color .3s;
   }
-
   .btn-reset:hover { border-color: var(--accent); color: var(--accent); }
 
-  /* Dots de loading */
-  .idle-msg {
-    color: var(--muted);
-    font-size: 1rem;
-    letter-spacing: 1px;
-    text-align: center;
-    width: 100%;
+  .idle-msg { color: var(--muted); font-size: 1rem; letter-spacing: 1px; text-align: center; width: 100%; }
+
+  /* MODAL DE SAQUE */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.75);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
   }
+  .modal-overlay.show { display: flex; }
+
+  .modal-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px 32px;
+    max-width: 420px;
+    width: 90%;
+    text-align: center;
+    animation: fadeUp .3s ease-out;
+  }
+
+  .modal-box h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 3px;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .modal-step { transition: opacity .4s; }
+  .modal-step p { font-size: 1.05rem; color: var(--text); line-height: 1.6; margin-bottom: 20px; }
+  .modal-step .muted-info { font-size: .85rem; color: var(--muted); margin-bottom: 20px; }
+
+  .pix-key-box {
+    background: var(--surface);
+    border: 1px dashed var(--border);
+    border-radius: 10px;
+    padding: 14px 20px;
+    margin-bottom: 20px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 4px;
+    color: var(--accent2);
+  }
+
+  .spinner {
+    display: inline-block;
+    width: 36px; height: 36px;
+    border: 3px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+    margin-bottom: 16px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .progress-bar-wrap {
+    background: var(--surface);
+    border-radius: 99px;
+    height: 6px;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 99px;
+    width: 0%;
+    transition: width .4s ease;
+  }
+
+  .status-msg {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    color: var(--accent);
+    min-height: 28px;
+    margin-bottom: 8px;
+  }
+
+  .final-joke { font-size: 1.8rem; margin-bottom: 8px; }
+  .joke-text { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 3px; color: var(--lose); margin-bottom: 12px; }
+  .joke-sub { font-size: .95rem; color: var(--muted); margin-bottom: 24px; }
+
+  .btn-fechar {
+    padding: 10px 32px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 3px;
+    color: var(--text);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: border-color .3s, color .3s;
+  }
+  .btn-fechar:hover { border-color: var(--accent); color: var(--accent); }
 
   @media (max-width: 520px) {
     .top-panel { grid-template-columns: 1fr 1fr; }
@@ -428,7 +423,6 @@ CODIGO ORIGINAL
     <p>Simulador Automático &nbsp;·&nbsp; SESI Lógica de Programação</p>
   </header>
 
-  <!-- STATS -->
   <div class="top-panel">
     <div class="stat-card">
       <div class="label">💰 Saldo</div>
@@ -444,26 +438,24 @@ CODIGO ORIGINAL
     </div>
   </div>
 
-  <!-- DADO -->
   <div class="dice-section">
     <div class="dice-wrap">
       <div class="dice" id="dice">?</div>
     </div>
   </div>
 
-  <!-- BOTÃO PLAY -->
-  <button class="btn-play" id="btnPlay" onclick="proximaRodada()">▶ INICIAR JOGO</button>
+  <div class="btn-row">
+    <button class="btn-play" id="btnPlay" onclick="proximaRodada()">▶ INICIAR JOGO</button>
+    <button class="btn-saque" id="btnSaque" onclick="abrirSaque()">💸 SACAR</button>
+  </div>
 
-  <!-- RODADA ATUAL -->
   <div class="current-round" id="currentRound">
     <p class="idle-msg">Clique em INICIAR para começar as rodadas automáticas</p>
   </div>
 
-  <!-- HISTÓRICO -->
   <div class="history-title" id="histTitle" style="display:none">📋 Histórico das Rodadas</div>
   <div class="history-list" id="historyList"></div>
 
-  <!-- RELATÓRIO FINAL -->
   <div class="final-report" id="finalReport">
     <h2>Relatório Final</h2>
     <div class="final-stats" id="finalStats"></div>
@@ -471,6 +463,40 @@ CODIGO ORIGINAL
     <button class="btn-reset" onclick="resetarJogo()">↺ JOGAR NOVAMENTE</button>
   </div>
 
+</div>
+
+<!-- MODAL SAQUE -->
+<div class="modal-overlay" id="modalSaque">
+  <div class="modal-box">
+
+    <!-- STEP 1: Processando -->
+    <div class="modal-step" id="step1">
+      <h3>💸 Saque em Andamento</h3>
+      <div class="spinner"></div>
+      <div class="status-msg" id="statusMsg">PROCESSANDO...</div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <p class="muted-info">Não feche esta janela. Seu saque está sendo processado pelo banco central de dados.</p>
+    </div>
+
+    <!-- STEP 2: Depositar valor mínimo -->
+    <div class="modal-step" id="step2" style="display:none">
+      <h3>⚠️ Atenção</h3>
+      <p>Para liberar o saque, é necessário depositar o valor mínimo de desbloqueio para a chave PIX abaixo:</p>
+      <div class="pix-key-box">* (asterisco)</div>
+      <p class="muted-info">⏳ Aguardando confirmação do depósito... O valor será estornado após a liberação.</p>
+    </div>
+
+    <!-- STEP 3: Era brincadeira kkk -->
+    <div class="modal-step" id="step3" style="display:none">
+      <div class="final-joke">😂</div>
+      <div class="joke-text">ERA BRINCADEIRA KKKKK</div>
+      <p class="joke-sub">Aqui não tem saque não! Isso são moedas virtuais do simulador, brother 💀<br><br>Mas parabéns por jogar até aqui!</p>
+      <button class="btn-fechar" onclick="fecharSaque()">✌️ FECHOU</button>
+    </div>
+
+  </div>
 </div>
 
 <script>
@@ -506,33 +532,27 @@ function sortearTipoAposta() {
 
 function verificarResultado(tipoAposta, palpite, resultadoDado, aposta) {
   if (tipoAposta === "exato") {
-    if (palpite === resultadoDado) {
-      return aposta * 5;
-    } else {
-      return -aposta;
-    }
+    if (palpite === resultadoDado) return aposta * 5;
+    else return -aposta;
   } else {
-    var dadoPar   = resultadoDado % 2 === 0;
+    var dadoPar = resultadoDado % 2 === 0;
     var palpitePar = palpite === "par";
-    if (dadoPar === palpitePar) {
-      return aposta * 2;
-    } else {
-      return -aposta;
-    }
+    if (dadoPar === palpitePar) return aposta * 2;
+    else return -aposta;
   }
 }
 
 function executarRodada(numRodada) {
   var aposta = numeroAleatorio(1, 10);
-  var tipo   = sortearTipoAposta();
-  var dado   = numeroAleatorio(1, 6);
+  var tipo = sortearTipoAposta();
+  var dado = numeroAleatorio(1, 6);
   var palpite, descPalpite;
 
   if (tipo === "exato") {
-    palpite     = numeroAleatorio(1, 6);
+    palpite = numeroAleatorio(1, 6);
     descPalpite = "número " + palpite;
   } else {
-    palpite     = numeroAleatorio(0, 1) === 0 ? "par" : "impar";
+    palpite = numeroAleatorio(0, 1) === 0 ? "par" : "impar";
     descPalpite = palpite;
   }
 
@@ -541,15 +561,14 @@ function executarRodada(numRodada) {
 
   var ganhou = lucro > 0;
 
-  // Adiciona ao vetor de histórico
   var registro = {
-    rodada:    numRodada,
-    aposta:    aposta,
-    tipo:      tipo,
-    palpite:   descPalpite,
+    rodada: numRodada,
+    aposta: aposta,
+    tipo: tipo,
+    palpite: descPalpite,
     resultado: dado,
-    lucro:     lucro,
-    ganhou:    ganhou,
+    lucro: lucro,
+    ganhou: ganhou,
     saldoApos: jogador.saldo
   };
   jogador.historico.push(registro);
@@ -563,12 +582,9 @@ function animarDado(valor, ganhou, cb) {
   var el = document.getElementById('dice');
   el.classList.remove('win', 'lose', 'rolling');
   el.textContent = '?';
-
-  // Força reflow para reiniciar animação
   void el.offsetWidth;
   el.classList.add('rolling');
 
-  // Simula rolagem com números aleatórios
   var ticks = 0;
   var interval = setInterval(function() {
     el.textContent = numeroAleatorio(1, 6);
@@ -584,10 +600,9 @@ function animarDado(valor, ganhou, cb) {
 }
 
 function atualizarStats() {
-  var elSaldo  = document.getElementById('saldo');
+  var elSaldo = document.getElementById('saldo');
   elSaldo.textContent = jogador.saldo;
   elSaldo.className = 'value' + (jogador.saldo > 100 ? ' green' : jogador.saldo < 100 ? ' red' : '');
-
   document.getElementById('rodadaAtual').textContent = rodadaCorrente + ' / ' + totalRodadas;
   document.getElementById('vd').textContent = vitorias + ' / ' + derrotas;
 }
@@ -595,18 +610,11 @@ function atualizarStats() {
 function exibirRodadaAtual(reg) {
   var el = document.getElementById('currentRound');
   el.className = 'current-round ' + (reg.ganhou ? 'win' : 'lose');
-
   var tipoLabel = reg.tipo === 'exato' ? 'Número Exato' : 'Par/Ímpar';
   el.innerHTML =
     '<div class="round-badge">R' + reg.rodada + '</div>' +
-    '<div class="round-info">' +
-      'Aposta: <strong>' + reg.aposta + '</strong> moedas &nbsp;|&nbsp; ' +
-      'Tipo: <strong>' + tipoLabel + '</strong><br>' +
-      'Palpite: <strong>' + reg.palpite + '</strong> &nbsp;→&nbsp; Dado: <strong>' + reg.resultado + '</strong>' +
-    '</div>' +
-    '<div class="round-result ' + (reg.ganhou ? 'win' : 'lose') + '">' +
-      (reg.ganhou ? '+' + reg.lucro : reg.lucro) +
-    '</div>';
+    '<div class="round-info">Aposta: <strong>' + reg.aposta + '</strong> moedas &nbsp;|&nbsp; Tipo: <strong>' + tipoLabel + '</strong><br>Palpite: <strong>' + reg.palpite + '</strong> &nbsp;→&nbsp; Dado: <strong>' + reg.resultado + '</strong></div>' +
+    '<div class="round-result ' + (reg.ganhou ? 'win' : 'lose') + '">' + (reg.ganhou ? '+' + reg.lucro : reg.lucro) + '</div>';
 }
 
 function adicionarHistoricoItem(reg) {
@@ -619,16 +627,11 @@ function adicionarHistoricoItem(reg) {
   item.className = 'history-item ' + cls;
   item.innerHTML =
     '<div class="hi-round">R' + reg.rodada + '</div>' +
-    '<div class="hi-desc">' +
-      tipoLabel + ' · Aposta: <strong>' + reg.aposta + '</strong><br>' +
-      '<span>Palpite: ' + reg.palpite + ' | Dado: ' + reg.resultado + '</span>' +
-    '</div>' +
+    '<div class="hi-desc">' + tipoLabel + ' · Aposta: <strong>' + reg.aposta + '</strong><br><span>Palpite: ' + reg.palpite + ' | Dado: ' + reg.resultado + '</span></div>' +
     '<div class="hi-dado">' + reg.resultado + '</div>' +
     '<div class="hi-lucro ' + cls + '">' + (reg.ganhou ? '+' + reg.lucro : reg.lucro) + '</div>';
 
   list.insertBefore(item, list.firstChild);
-
-  // Força reflow antes de animação
   void item.offsetWidth;
   item.classList.add('show');
 }
@@ -668,7 +671,6 @@ function proximaRodada() {
 
   var btn = document.getElementById('btnPlay');
 
-  // Laço: verifica condições de parada
   if (rodadaCorrente >= totalRodadas || jogador.saldo <= 0) {
     mostrarRelatorioFinal();
     btn.disabled = true;
@@ -680,7 +682,6 @@ function proximaRodada() {
   rodadaCorrente++;
 
   var reg = executarRodada(rodadaCorrente);
-
   if (reg.ganhou) vitorias++; else derrotas++;
 
   animarDado(reg.resultado, reg.ganhou, function() {
@@ -690,7 +691,6 @@ function proximaRodada() {
 
     jogoEmAndamento = false;
 
-    // Verifica se acabou
     if (rodadaCorrente >= totalRodadas || jogador.saldo <= 0) {
       btn.textContent = '📊 VER RELATÓRIO';
       btn.disabled = false;
@@ -702,7 +702,6 @@ function proximaRodada() {
 }
 
 function resetarJogo() {
-  // Reinicia objeto do jogador e vetor
   jogador.saldo = 100;
   jogador.historico = [];
   rodadaCorrente = 0;
@@ -731,6 +730,54 @@ function resetarJogo() {
   btn.textContent = '▶ INICIAR JOGO';
   btn.disabled = false;
 }
+
+// ===== LÓGICA DO SAQUE =====
+
+function abrirSaque() {
+  // Reseta o modal
+  document.getElementById('step1').style.display = 'block';
+  document.getElementById('step2').style.display = 'none';
+  document.getElementById('step3').style.display = 'none';
+  document.getElementById('progressBar').style.width = '0%';
+  document.getElementById('statusMsg').textContent = 'PROCESSANDO...';
+  document.getElementById('modalSaque').classList.add('show');
+
+  var mensagens = [
+    { texto: 'PROCESSANDO...', pct: 15 },
+    { texto: 'CONECTANDO AO BANCO...', pct: 30 },
+    { texto: 'VERIFICANDO SALDO...', pct: 50 },
+    { texto: 'AGUARDANDO APROVAÇÃO...', pct: 65 },
+    { texto: 'FALTA SÓ MAIS UM POUCO...', pct: 80 },
+    { texto: 'QUASE LÁ...', pct: 90 },
+  ];
+
+  var i = 0;
+  function avancar() {
+    if (i < mensagens.length) {
+      document.getElementById('statusMsg').textContent = mensagens[i].texto;
+      document.getElementById('progressBar').style.width = mensagens[i].pct + '%';
+      i++;
+      setTimeout(avancar, i === 1 ? 600 : 900);
+    } else {
+      setTimeout(function() {
+        document.getElementById('step1').style.display = 'none';
+        document.getElementById('step2').style.display = 'block';
+        // Após 10 segundos mostra o "era brincadeira"
+        setTimeout(function() {
+          document.getElementById('step2').style.display = 'none';
+          document.getElementById('step3').style.display = 'block';
+        }, 10000);
+      }, 800);
+    }
+  }
+  avancar();
+}
+
+function fecharSaque() {
+  document.getElementById('modalSaque').classList.remove('show');
+}
 </script>
 </body>
 </html>
+ENDOFFILE
+echo "OK"
